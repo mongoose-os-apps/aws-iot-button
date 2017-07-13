@@ -5,7 +5,7 @@ is pressed, a cloud backend gets a notification and performs an action.
 In this particular case, AWS Lambda function sends an email to the specific
 email address. But, again, the action could be anything.
 
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/yZ8VAxJ2XpA/0.jpg)](https://www.youtube.com/watch?v=yZ8VAxJ2XpA)
+[![aws iot button](https://img.youtube.com/vi/yZ8VAxJ2XpA/0.jpg)](https://www.youtube.com/watch?v=yZ8VAxJ2XpA)
 
 ## Prerequisites
 

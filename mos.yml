@@ -11,6 +11,8 @@ mongoose_os_version: ${mos_version}
 tags:
   - js
   - c
+  - cloud
+  - aws
 
 filesystem:
   - fs
