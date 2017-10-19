@@ -33,40 +33,49 @@ The data flow is as follows:
 ## Build instructions
 
 1. Follow the [Cloud side setup](https://mongoose-os.com/aws-iot-starter-kit/#cloud) instructions to setup AWS CLI utility and your AWS credentials
-2. Follow the [Device setup](https://mongoose-os.com/aws-iot-starter-kit/#dev) instructions to setup your device and provision it with AWS IoT
+2. Follow the [Device setup](https://mongoose-os.com/aws-iot-starter-kit/#dev) instructions to setup your device and provision it to the AWS IoT
 3. Download [this repository as a zip file](https://github.com/mongoose-os-apps/aws-iot-button/archive/master.zip) and extract this app on your computer
 4. Exit any running `mos.exe` process
 5. Open a command prompt (on Windows) or terminal (on Mac/Linux) and go to the extracted app.
 6. You should be able to see the `mos.yml` file by running `dir mos.yml` command (on Windows) or `ls -l mos.yml` (on Mac/Linux)
-7. Run `mos config-get device.id` to find out the device ID. On Windows,
-   here and further, you might need to specify the full path to the `mos.exe`
-   binary: `c:\path\to\mos.exe config-get device.id`
+7. Find out your device ID
+```
+mos config-get device.id
+``` 
+On Windows, here and further, you might need to
+specify the full path to the `mos.exe` binary:
+
+```
+c:\path\to\mos.exe config-get device.id
+```
 8. Run the following command to create AWS Cloud Formation stack.
    Change `$DEVICE_ID` to your actual device ID, and `$MY_EMAIL` to your email:
 
 ```
-aws cloudformation create-stack \
-    --stack-name my-internet-button \
-    --parameters \
-        ParameterKey=TopicName,ParameterValue=$DEVICE_ID/button_pressed \
-        ParameterKey=SubscriptionEmail,ParameterValue=$MY_EMAIL \
-    --capabilities CAPABILITY_IAM \
-    --template-body file://aws_button_template.json
+aws cloudformation create-stack --stack-name my-internet-button --parameters ParameterKey=TopicName,ParameterValue=$DEVICE_ID/button_pressed ParameterKey=SubscriptionEmail,ParameterValue=$MY_EMAIL --capabilities CAPABILITY_IAM --template-body file://aws_button_template.json
 ```
 
 9. Wait until the stack creation is completed (it may take a few minutes).
    Alternatively, you can use the web UI to check the status and read event
    details: https://console.aws.amazon.com/cloudformation/home
-   During the stack creation, AWS will send a Subscription Confirmation email,
-   so check your email and confirm the subscription by following a link.
-   Run the following command to ensure that the stack creation is complete:
 
+10. During the stack creation, AWS will send a Subscription Confirmation email,
+   so check your email and confirm the subscription by following a link.
+
+11. Run the following command to ensure that the stack creation is complete:
 ```
 aws cloudformation wait stack-create-complete --stack-name my-internet-button
 ```
 
-11. Run `mos put fs/init.js` to copy the `fs/init.js` file to your device
-12. Run `mos console` to attach to the device and see device logs 
+11. Copy the `fs/init.js` file to your device:
+```
+mos put fs/init.js
+```
+
+12. Attach to the device to see the device logs 
+```
+mos console
+```
 13. Reboot your device by pressing a reboot button
 13. When the device is connected to the AWS IoT, push the "flash"
     button on your device.
